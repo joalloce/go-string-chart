@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -12,10 +13,12 @@ func main() {
 	if args[0] == "yearbar" {
 		yearbar()
 	} else {
-		result, err := parseFloats(args)
-		if err == nil {
+		result, stopError := parseFloats(args)
+		if !stopError {
 			fmt.Println(result)
 			fmt.Println(len(result))
+		} else {
+			fmt.Println("something went bad")
 		}
 	}
 }
@@ -38,8 +41,16 @@ func yearbar() {
 	fmt.Println(bar)
 }
 
-func parseFloats(args []string) ([]float64, error) {
+func parseFloats(args []string) ([]float64, bool) {
+	stopError := false
 	result := make([]float64, len(args))
-	fmt.Println(result)
-	return result, nil
+	for i, arg := range args {
+		if number, err := strconv.ParseFloat(arg, 64); err == nil {
+			result[i] = number
+		} else {
+			stopError = true
+			break
+		}
+	}
+	return result, stopError
 }
