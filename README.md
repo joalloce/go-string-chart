@@ -1,6 +1,8 @@
 # String Chart
 
-## Setup
+- Go
+
+## Usage
 
 @ProgressYearBar:
 
@@ -10,7 +12,7 @@ go run main.go yearbar
 2023 April 5
 ```
 
-String Progress bar chart from command-line arguments:
+Progress bar chart from command-line arguments:
 
 ```
 go run main.go 23.2 32.1 75.32 78.4 90.4 8.3 55.4
