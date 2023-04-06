@@ -15,11 +15,9 @@ func main() {
 		yearbar()
 	} else {
 		result, stopError := parseFloats(args)
+
 		if !stopError {
-			fmt.Println(result)      //
-			fmt.Println(len(result)) //
 			charts(result)
-			// create chart
 		} else {
 			fmt.Println("something went bad")
 		}
@@ -39,7 +37,7 @@ func yearbar() {
 		}
 	}
 
-	bar += " " + fmt.Sprintf("%.2f", porcentage) + "%"
+	bar += "\tDay " + strconv.Itoa(yearday) + ".\t" + fmt.Sprintf("%.2f", porcentage) + "%"
 
 	fmt.Println(bar)
 	fmt.Println(time.Now().Date())
@@ -70,7 +68,26 @@ func parseFloats(args []string) ([]float64, bool) {
 
 func charts(args []float64) {
 	max := max(args)
-	fmt.Println(max)
+
+	for _, arg := range args {
+		porcentage := (arg / max) * float64(100)
+		fmt.Println("|")
+		bar := "|"
+
+		for i := 0; i < 20; i++ {
+			if i*5 > int(porcentage) {
+				bar += "▒"
+			} else {
+				bar += "▓"
+			}
+		}
+
+		bar += "\t" + fmt.Sprintf("%.1f", arg) + "\t" + fmt.Sprintf("%.2f", porcentage) + "%"
+		fmt.Println(bar)
+	}
+
+	fmt.Println("---------------------------------------")
+	fmt.Println("                    100%")
 }
 
 func max(args []float64) float64 {
